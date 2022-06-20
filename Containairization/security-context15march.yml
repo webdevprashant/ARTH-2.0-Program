@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod8
+spec:
+  containers:
+  - name: myc1
+    image: "vimal13/apache-webserver-php"
+    securityContext:
+#       runAsUser: 1022       #Container won't start bcz of general user
+      capabilities:
+        #drop: [ "NET_RAW" ]
+	add:  [" BIND_SERVICE "]       

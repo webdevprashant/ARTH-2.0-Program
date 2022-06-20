@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "mypod22feb"
+spec:
+  containers:
+  - name: "myc1"
+    image: "vimal13/apache-webserver-php"
+    volumeMounts:
+    - mountPath: /etc/httpd/conf.d/
+      name: mycm
+  volumes:
+  - configMap:
+      name: myconfig
+    name: mycm

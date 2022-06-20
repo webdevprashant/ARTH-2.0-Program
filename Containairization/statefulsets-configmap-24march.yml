@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+data:
+  primary.cnf:  |
+    # Apply this config only in primary/master node
+    [mysqld]
+    log-bin            # is a key to tell mysql server you r primary/master comp.
+  replica.cnf:  |
+    # Apply this config only in sec/read replica node
+    [mysqld]
+    super-read-only    # is a key to tell mysql server you r sec comp.

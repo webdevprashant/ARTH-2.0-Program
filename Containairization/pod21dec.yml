@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "mypod"
+  labels:
+    region: IN
+spec:
+  volumes:
+  - name: storge1
+    persistentVolumeClaim:
+      claimName: myrahulpvc
+  
+  containers:
+  - name: "myboundc1"
+    image: "vimal13/apache-webserver-php"
+    volumeMounts:
+    - mountPath: /var/www/data
+      name: storge1

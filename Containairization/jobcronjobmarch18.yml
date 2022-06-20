@@ -1,0 +1,26 @@
+#apiVersion: batch/v1
+apiVersion: batch/v1beta1
+#kind: Job
+kind: CronJob
+metadata:
+  name: myd
+spec:
+#  schedule: "min  hour day month dayofweek"
+  schedule: "*/2 * * * *"
+  jobTemplate:
+   spec:
+     completions: 6
+     parallelism: 2
+     template:
+       metadata:
+        labels:
+          app: myd
+       spec:
+         containers:
+         - image: vimal13/apache-webserver-php
+           name: apache-webserver-php
+           command: ["expr" , "2" , "+" , "7" ]
+#          - "/bin/bash"
+#          - "-c"
+#          - "for i in 1 2 3 4 5 6; do echo $i; done"
+         restartPolicy: Never	

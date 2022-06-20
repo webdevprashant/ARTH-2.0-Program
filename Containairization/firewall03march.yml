@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mywebsec
+spec:
+  podSelector:
+    matchLabels: 
+      app: myd
+  policyTypes:
+  - Ingress
+  
+  ingress:
+  - ports:
+     - port: 81
+       protocol: TCP

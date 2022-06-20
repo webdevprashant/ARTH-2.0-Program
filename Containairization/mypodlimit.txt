@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"name":"default-limitsetauto","namespace":"default"},"spec":{"containers":[{"image":"nginx","name":"default-cpu-limit"}]}}
+    kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu request for container
+      default-cpu-limit; cpu limit for container default-cpu-limit'
+  creationTimestamp: "2022-03-24T09:58:32Z"
+  name: default-limitsetauto
+  namespace: default
+  resourceVersion: "64320"
+  uid: 984e1377-0d94-4f5f-b30c-432531984bf7
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: Always
+    name: default-cpu-limit
+    resources:
+      limits:
+        cpu: "1"
+      requests:
+        cpu: 500m
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-vl57p
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minikube
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-vl57p
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-03-24T09:58:32Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-03-24T09:58:32Z"
+    message: 'containers with unready status: [default-cpu-limit]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-03-24T09:58:32Z"
+    message: 'containers with unready status: [default-cpu-limit]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-03-24T09:58:32Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - image: nginx
+    imageID: ""
+    lastState: {}
+    name: default-cpu-limit
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      waiting:
+        message: Back-off pulling image "nginx"
+        reason: ImagePullBackOff
+  hostIP: 192.168.59.100
+  phase: Pending
+  podIP: 172.17.0.6
+  podIPs:
+  - ip: 172.17.0.6
+  qosClass: Burstable
+  startTime: "2022-03-24T09:58:32Z"
